@@ -27,6 +27,25 @@ class ViewController: UIViewController {
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
+        collectionView.register(
+            HeaderView.self,
+            forSupplementaryViewOfKind: SupplementaryElements.collectionHeader,
+            withReuseIdentifier: SupplementaryElements.collectionHeader
+        )
+        
+        collectionView.register(
+            HeaderView.self,
+            forSupplementaryViewOfKind: SupplementaryElements.sectionHeader,
+            withReuseIdentifier: SupplementaryElements.sectionHeader
+        )
+
+        collectionView.register(
+            Spacer.self,
+            forSupplementaryViewOfKind: SupplementaryElements.sectionSpacer,
+            withReuseIdentifier: SupplementaryElements.sectionSpacer
+        )
+
+        
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate(
@@ -50,6 +69,20 @@ extension ViewController: UICollectionViewDataSource {
         cell.backgroundColor = model.colors[indexPath.row]
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: kind,
+            for: indexPath
+        )
+        
+        if let header = cell as? HeaderView {
+            header.label.text = kind
+        }
+        
         return cell
     }
 }

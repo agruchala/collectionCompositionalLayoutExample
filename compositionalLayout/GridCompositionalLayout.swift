@@ -7,10 +7,17 @@
 
 import UIKit
 
+enum SupplementaryElements {
+    static let collectionHeader = "collection-header"
+    static let sectionHeader = "section-header"
+    static let sectionSpacer = "sectionSpacer"
+}
+
 enum GridCompositionalLayout {
     static func generateLayout() -> UICollectionViewCompositionalLayout {
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.boundarySupplementaryItems = [makeCollectionHeader()]
         
         return UICollectionViewCompositionalLayout(
             section: makeSection(),
@@ -75,6 +82,39 @@ enum GridCompositionalLayout {
         return compositionalGroup
     }
     
+    private static func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(32)
+            ),
+            elementKind: SupplementaryElements.sectionHeader,
+            alignment: .top
+        )
+    }
+    
+    private static func makeCollectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(32)
+            ),
+            elementKind: SupplementaryElements.collectionHeader,
+            alignment: .top
+        )
+    }
+    
+    private static func makeSpacer() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(60)
+            ),
+            elementKind: SupplementaryElements.sectionSpacer,
+            alignment: .top
+        )
+    }
+    
     private static func makeSection() -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: makeGroup())
         section.contentInsets = .init(
@@ -82,6 +122,8 @@ enum GridCompositionalLayout {
             leading: 0,
             bottom: 0, trailing: 0
         )
+        section.boundarySupplementaryItems = [makeSpacer(), makeSectionHeader()]
+        
         return section
     }
     
