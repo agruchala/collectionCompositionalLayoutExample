@@ -25,6 +25,18 @@ enum GridCompositionalLayout {
                 heightDimension: .fractionalWidth(0.5)
             )
         )
+        item.contentInsets = .init(top: 0, leading: 2, bottom: 2, trailing: 2)
+        
+        return item
+    }
+    
+    private static func makeBigItem() -> NSCollectionLayoutItem {
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalWidth(1)
+            )
+        )
         item.contentInsets = .init(top: 0, leading: 2, bottom: 0, trailing: 2)
         
         return item
@@ -38,9 +50,29 @@ enum GridCompositionalLayout {
             ),
             subitems: [makeItem()]
         )
-            
+        
         group.contentInsets = .init(top: 0, leading: 2, bottom: 4, trailing: 2)
-            return group
+        
+        let groupWithBigElement = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalWidth(1)
+            ),
+            subitems: [makeBigItem()]
+        )
+        
+        groupWithBigElement.contentInsets = .init(top: 0, leading: 2, bottom: 4, trailing: 2)
+        
+        
+        let compositionalGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalWidth(1.5)
+            ),
+            subitems: [group, groupWithBigElement]
+        )
+        
+        return compositionalGroup
     }
     
     private static func makeSection() -> NSCollectionLayoutSection {
