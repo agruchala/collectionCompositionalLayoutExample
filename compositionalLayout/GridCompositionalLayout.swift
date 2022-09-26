@@ -21,23 +21,26 @@ enum GridCompositionalLayout {
     private static func makeItem() -> NSCollectionLayoutItem {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalWidth(1)
+                widthDimension: .fractionalWidth(0.5),
+                heightDimension: .fractionalWidth(0.5)
             )
         )
-        item.contentInsets = .init(top: 0, leading: 4, bottom: 4, trailing: 4)
+        item.contentInsets = .init(top: 0, leading: 2, bottom: 0, trailing: 2)
         
         return item
     }
     
     private static func makeGroup() -> NSCollectionLayoutGroup {
-        return NSCollectionLayoutGroup.horizontal(
+        let group =  NSCollectionLayoutGroup.horizontal(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalWidth(1)
+                heightDimension: .fractionalWidth(0.5)
             ),
             subitems: [makeItem()]
         )
+            
+        group.contentInsets = .init(top: 0, leading: 2, bottom: 4, trailing: 2)
+            return group
     }
     
     private static func makeSection() -> NSCollectionLayoutSection {
