@@ -11,7 +11,6 @@ enum GridCompositionalLayout {
     static func generateLayout() -> UICollectionViewCompositionalLayout {
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 16
         
         return UICollectionViewCompositionalLayout(
             section: makeSection(),
@@ -26,7 +25,7 @@ enum GridCompositionalLayout {
                 heightDimension: .fractionalWidth(1)
             )
         )
-        item.contentInsets = .init(top: 4, leading: 4, bottom: 4, trailing: 4)
+        item.contentInsets = .init(top: 0, leading: 4, bottom: 4, trailing: 4)
         
         return item
     }
@@ -43,6 +42,11 @@ enum GridCompositionalLayout {
     
     private static func makeSection() -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: makeGroup())
+        section.contentInsets = .init(
+            top: 16,
+            leading: 0,
+            bottom: 0, trailing: 0
+        )
         return section
     }
     
