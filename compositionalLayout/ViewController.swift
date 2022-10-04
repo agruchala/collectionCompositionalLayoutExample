@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(LetterCell.self, forCellWithReuseIdentifier: "letterCell")
         
         collectionView.register(
             HeaderView.self,
@@ -60,11 +61,25 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section % 2 == 0 {
+            return model.letters.count
+        }
         return model.colors.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section % 2 == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "letterCell", for: indexPath) as! LetterCell
+            cell.letterLabel.text = String(model.letters[indexPath.row])
+            return cell
+        }
+        
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         cell.backgroundColor = model.colors[indexPath.row]
         cell.layer.cornerRadius = 5
