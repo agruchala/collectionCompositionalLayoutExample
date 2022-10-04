@@ -24,4 +24,13 @@ final class ColorRepository {
             UIColor.random
         }
     }()
+    
+    lazy var letters: [Character] = {
+        let aScalars = "a".unicodeScalars
+        let aCode = aScalars[aScalars.startIndex].value
+        
+        return (0..<26).map { i in
+            Character(Unicode.Scalar(aCode + i) ?? aScalars[aScalars.startIndex])
+        }
+    }()
 }
