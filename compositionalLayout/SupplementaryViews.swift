@@ -39,3 +39,27 @@ final class Spacer: UICollectionReusableView {
         backgroundColor = .clear
     }
 }
+
+final class LetterCell: UICollectionViewCell {
+    private(set) lazy var letterLabel = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func setupViews() {
+        contentView.addSubview(letterLabel)
+        
+        NSLayoutConstraint.activate(
+            [
+                contentView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                contentView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            ]
+        )
+    }
+}
