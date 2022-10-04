@@ -54,11 +54,16 @@ final class LetterCell: UICollectionViewCell {
     
     private func setupViews() {
         contentView.addSubview(letterLabel)
+        letterLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.black.cgColor
+        layer.cornerRadius = 5
         
         NSLayoutConstraint.activate(
             [
-                contentView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                contentView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+                letterLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                letterLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ]
         )
     }
