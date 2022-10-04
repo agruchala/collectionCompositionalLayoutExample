@@ -20,7 +20,13 @@ enum GridCompositionalLayout {
         config.boundarySupplementaryItems = [makeCollectionHeader()]
         
         return UICollectionViewCompositionalLayout(
-            section: makeSection(),
+            sectionProvider: { section, _ in
+                
+                if section % 2 == 0 {
+                    return makeLetterSection()
+                }
+                return makeSection()
+            },
             configuration: config
         )
     }
@@ -125,6 +131,47 @@ enum GridCompositionalLayout {
         section.boundarySupplementaryItems = [makeSpacer(), makeSectionHeader()]
         
         return section
+    }
+    
+}
+
+extension GridCompositionalLayout {
+    
+    private static func makeLetterItem() -> NSCollectionLayoutItem {
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(0.5)
+            )
+        )
+        
+        item.contentInsets = .init(top: 3, leading: 3, bottom: 3, trailing: 3)
+        return item
+    }
+    
+    private static func makeLetterGroup() -> NSCollectionLayoutGroup {
+        let group =  NSCollectionLayoutGroup.vertical(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(3/8),
+                heightDimension: .fractionalWidth(6/8)
+            ),
+            subitems: [makeLetterItem()]
+        )
+        
+        return group
+    }
+    
+    private static func makeLetterSection() -> NSCollectionLayoutSection {
+        let section = NSCollectionLayoutSection(group: makeLetterGroup())
+        section.contentInsets = .init(
+            top: 16,
+            leading: 0,
+            bottom: 16,
+            trailing: 0
+        )
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        return section
+
     }
     
 }
